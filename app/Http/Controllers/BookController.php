@@ -17,7 +17,7 @@ class BookController extends Controller
     {
        return view('book.create');
     }
-    //'author', 'description', 'price
+    
     public function store(Request $request){
        $book = new Book();
        $book->title = $request->input('title');
@@ -27,6 +27,26 @@ class BookController extends Controller
        $book->price = $request->input('price');
        $book->save();
 
-       return redirect('/books');
+       return redirect('/books');  #redireccionar a libros
+    }
+
+    public function edit(Book $book){    
+        return view('book.edit', compact('book'));  #retorna vista de edit
+    }
+
+    public function update(Request $request, Book $book){ 
+        $book->title = $request->input('title');
+        $book->subtitle = $request->input('subtitle');
+        $book->author = $request->input('author');
+        $book->description = $request->input('description');
+        $book->price = $request->input('price');
+        $book->save(); // UPDATE
+
+        return redirect('/books');
+    }
+
+    public function destroy(Book $book){
+        $book->delete();
+        return redirect('/books');
     }
 }
